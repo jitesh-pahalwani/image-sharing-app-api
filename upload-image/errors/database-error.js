@@ -1,5 +1,6 @@
 const CustomError = require('./custom-error');
 
+// A class for errors related to DB transactions.
 class DatabaseError extends CustomError {
   constructor(message) {
     super(message);

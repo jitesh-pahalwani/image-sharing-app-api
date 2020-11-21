@@ -1,5 +1,6 @@
 const CustomError = require('./custom-error');
 
+// A class for errors related to uploading to AWS S3 bucket.
 class UploadError extends CustomError {
   statusCode = 500;
 

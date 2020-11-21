@@ -1,8 +1,10 @@
 const s3Instance = require('./s3-instance');
 
+// Method to upload a post to the AWS S3 bucket.
 const uploadFileToS3 = (dataObject) => {
   const { username, fileContent, FileContentType } = dataObject;
   const destFileName = username + new Date().getTime();
+  
   // Setting up S3 upload parameters
   const params = {
       Bucket: process.env.AWS_BUCKET_NAME,
@@ -14,10 +16,8 @@ const uploadFileToS3 = (dataObject) => {
   return new Promise((resolve, reject) => {
     s3Instance.upload(params, function(err, data) {
       if (err) {
-        console.log('error while uploading... ', err);
           reject(err);
       }
-      console.log(`File uploaded successfully. ${data.Location}`, data);
       const uploadResultObject = {
         fileUrl: data.Location,
         postUniqueName: destFileName

@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 
+// Create an instance of the MySQL DB Connection.
 var dbConnection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -7,6 +8,7 @@ var dbConnection = mysql.createConnection({
   database: process.env.DB_NAME
 });
 
+// Attempt to connect to the MySQL DB Connection.
 dbConnection.connect(function(err) {
   if (err) throw err;
   console.log("Connected to database!");

@@ -1,7 +1,7 @@
 const CustomError = require('../errors/custom-error');
 
+// An error handling middleware.
 const errorHandler = (error, req, res, next) => {
-    console.log('error in middleware ', error);
 
     if (error instanceof CustomError) {
         return res.status(error.statusCode).send({ errors: error.serializeErrors() });

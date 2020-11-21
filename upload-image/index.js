@@ -15,6 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// upload-image POST API
 app.post('/upload-image', [
   body('username')
   .not()
@@ -29,26 +30,30 @@ app.post('/upload-image', [
   .isEmpty()
   .withMessage('fileContent should not be empty')
 ] ,async (req, res, next) => {
-  console.log(req.body);
+  // Get results from the validations done on the request body.
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
+    // If there are any validation errors, create an instance of the validation error class.
     next(new ValidationError(errors.array()));
     return;
   }
 
   try {
+    // Calling the method to upload the file to AWS S3 bucket.
     const uploadResult = await uploadFileToS3(req.body);
+
     try {
+      // On successful upload to S3 bucket, save the new post url and other related details to DB.
       const dbResult = await savePostToDB(uploadResult, req.body);
-      console.log('success!!!');
     } catch(error) {
-      console.log('error in db updating ', error);
+      // Catch the error encountered while saving the post details to DB.
       next(new DatabaseError(error));
       return;
     }
+
   } catch(err) {
-    console.log('error while uploading file ', err);
+    // Catch the error encountered while uploading the file to AWS S3 bucket.
     next(new UploadError(err));
     return;
   }

@@ -1,6 +1,6 @@
+// A custom error class.
 class CustomError extends Error {
   constructor(message) {
-    console.log('CustomError constructor ', message);
     super(message);
     this.statusCode;
   }
