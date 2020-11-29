@@ -41,14 +41,13 @@ app.get('/get-feed-server-sent', (req, res) => {
 
   // Send the data stream to the client.
   myEmitter.on('newpost', (data) => {
-    res.write(`data: {\n`);
-    res.write(`data: "post_id": "${data.post_id}",\n`);
-    res.write(`data: "post_url": "${data.post_url}",\n`);
-    res.write(`data: "post_description": "${data.post_description}",\n`);
-    res.write(`data: "post_timestamp": "${data.post_timestamp}",\n`);
-    res.write(`data: "username": "${data.username}",\n`);
-    res.write(`data: "profile_image": "${data.profile_image}"\n`);
-    res.write(`data: }\n\n`);
+    res.write(`data: {"post_id": "${data.post_id}"}\n\n`);
+    res.write(`data: {"post_url": "${data.post_url}"}\n\n`);
+    res.write(`data: {"post_description": "${data.post_description}"}\n\n`);
+    res.write(`data: {"post_timestamp": "${data.post_timestamp}"}\n\n`);
+    res.write(`data: {"username": "${data.username}"}\n\n`);
+    res.write(`data: {"profile_image": "${data.profile_image}"}\n\n`);
+    res.write(`data: {"endOfMsg": "true"}\n\n`);
   });
 
 });

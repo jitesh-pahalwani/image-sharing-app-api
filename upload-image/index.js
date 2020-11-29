@@ -14,7 +14,7 @@ const uploadFileToS3 = require('./s3-connection/s3.utils');
 const CustomError = require('../feeds/errors/custom-error.js');
 
 const app = express();
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 app.use(cors());
 
 // upload-image POST API
@@ -49,7 +49,9 @@ app.post('/upload-image', [
 
       try{
         // Calling the API which sends Server Sent Event to the client.
-        const ssePostResult = axios.post(`${process.env.SSE_API_ENDPOINT}/get-feed-server-sent`, {...uploadResult, ...req.body});
+        const { FileContentType, username, post_description } = req.body;
+        const requestObj = { FileContentType, username, post_description };
+        const ssePostResult = axios.post(`${process.env.SSE_API_ENDPOINT}/get-feed-server-sent`, {...uploadResult, ...requestObj});
       }catch(err){
         next(new CustomError(err));
       }

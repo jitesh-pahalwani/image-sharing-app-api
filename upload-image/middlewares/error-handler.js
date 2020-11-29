@@ -8,7 +8,7 @@ const errorHandler = (error, req, res, next) => {
       }
     
       res.status(400).send({
-        errors: [{ message: 'Something went wrong' }]
+        errors: [{ message: error.message }]
       });
 };
 
